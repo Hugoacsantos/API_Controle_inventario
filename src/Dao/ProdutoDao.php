@@ -54,7 +54,7 @@ class ProdutoDao {
         $sql = $this->pdo->prepare("SELECT * FROM produtos WHERE id = :id");
         $sql->bindValue(':id',$id);
         $sql->execute();
-        $dados = $sql->fetch(PDO::FETCH_OBJ);
+        $dados = $sql->fetch(PDO::FETCH_OBJ, Produto::class);
 
         return $dados;
     }

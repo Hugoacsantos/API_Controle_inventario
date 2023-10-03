@@ -15,24 +15,8 @@ class SaidaDao {
     }
 
     public function saidaDeProduto(SaidaProduto $saida){
-        $produtodados = new ProdutoDao($this->pdo);
-        $produto = $produtodados->encontrarPorID($saida->id_produto);
-        
-        
-        if($produto->quantidade < 0){
-            throw new Exception("Erro,Quantidade do produto esta vazia");
-        }
-
-        $quantidadeSaida = $produto->quantidade - $saida->quantidade;
-        if($quantidadeSaida < 0 ){
-            return $quantidadeSaida = 0;
-        }
-        $saidaProduto = $this->pdo->prepare("UPDATE produtos SET quantidade = :quantidade WHERE id = :id");
-        $saidaProduto->bindValue(':id',$saida->id_produto);
-        $saidaProduto->bindValue(':quantidade', $quantidadeSaida);
-        $saidaProduto->execute();        
-        
-
+        $id = md5(time() * rand(1, 9999));
+       
         $retirar = $this->pdo->prepare("INSERT INTO saidas (id,id_produto,quantidade) VALUES (:id,:id_produto,:quantidade)");
         $id = md5(time() * rand(9,999));
         $retirar->bindValue(":id",$id);

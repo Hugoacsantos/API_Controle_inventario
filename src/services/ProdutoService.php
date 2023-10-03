@@ -29,14 +29,21 @@ class ProdutoServices {
         return true;
     }
 
+    public function atualizar(Produto $produto){
+        $id = $produto->id;
+        $produtoDao = $this->produtoDao->encontrarPorID($id);
+        if(!isset($produtoDao)) {
+            throw new Exception("Produto não existe");
+        }
+        $this->produtoDao->editar($produto);
+    }
+
     public function procurarPorTitulo($titulo){
         
     }
 
     public function procurarPorid($id){
         
-    
-
     }
 
 }

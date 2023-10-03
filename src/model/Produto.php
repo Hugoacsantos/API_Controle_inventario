@@ -4,21 +4,17 @@ namespace src\model;
 
 class Produto {
 
-    public ?int $id;
-    public string $titulo;
-    public string $quantidade;
-    public float $valor;
+    // public int $id;
+    // public string $titulo;
+    // public string $quantidade;
+    // public float $valor;
     
-    // public function __construct(
-    //     string $titulo = '',
-    //     string $quantidade = '',
-    //     float $valor = 0,
-    // )
-    // {
-    //     $this->titulo = $titulo;
-    //     $this->quantidade = $quantidade;
-    //     $this->valor = $valor;
-    // }
+    public function __construct(
+        public int $id = 0,
+        public string $titulo = '',
+        public string $quantidade = '',
+        public float $valor = 0,
+    ){}
 
     
     public function totalDoProduto(){
