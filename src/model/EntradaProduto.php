@@ -10,11 +10,10 @@ class EntradaProduto {
     // public string $data_entrada;
 
     public function __construct(
-         public int $id,
+         public int $id = 0,
          public int $id_produto,
          public int $quantidade,
-         public float|int $preco_unidade,
-         public string $data_entrada,
+         public string $data_entrada = '',
     ){}
     
 

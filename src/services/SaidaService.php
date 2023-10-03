@@ -12,13 +12,13 @@ class SaidaService {
     private SaidaDao $saidaDao;
     private ProdutoDao $produtoDao;
 
-    public function __construct(SaidaProduto $saidaDao, ProdutoDao $produtoDao)
+    public function __construct(SaidaDao $saidaDao, ProdutoDao $produtoDao)
     {
         $this->saidaDao = $saidaDao;
         $this->produtoDao = $produtoDao;
     }
 
-    public function criarEntrada(SaidaProduto $entradaProduto){
+    public function retirada(SaidaProduto $entradaProduto){
         $produto = $this->produtoDao->encontrarPorID($entradaProduto->id_produto);
         if(!isset($produto)){
             return throw new Exception("Produto nao existe");

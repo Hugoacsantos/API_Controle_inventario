@@ -17,6 +17,7 @@ class ProdutoServices {
     
     public function listar(){
         $lista = $this->produtoDao->lista();
+        return $lista;
     }
 
     public function adicionarProduto(Produto $produtoDao){
@@ -36,6 +37,13 @@ class ProdutoServices {
             throw new Exception("Produto não existe");
         }
         $this->produtoDao->editar($produto);
+    }
+
+    public function deletar($id){
+        if($id === null) {
+            return throw new Exception("Id vazio");
+        }
+        $this->produtoDao->deletar($id);
     }
 
     public function procurarPorTitulo($titulo){
