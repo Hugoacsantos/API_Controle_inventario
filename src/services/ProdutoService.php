@@ -6,7 +6,7 @@ use Exception;
 use src\Dao\ProdutoDao;
 use src\model\Produto;
 
-class ProdutoServices {
+class ProdutoService {
     
     private ProdutoDao $produtoDao;
 

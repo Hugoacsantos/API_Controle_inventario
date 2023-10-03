@@ -10,10 +10,11 @@ use src\model\EntradaProduto;
 use src\model\Produto;
 use src\model\SaidaProduto;
 use src\services\EntradaService;
-use src\services\ProdutoServices;
+use src\services\ProdutoService;
 use src\services\SaidaService;
 
 require __DIR__ . '/../vendor/autoload.php';
+// require_once __DIR__.'/../config.php';
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
@@ -21,9 +22,9 @@ $app->addBodyParsingMiddleware();
 $ProdutoDao = new ProdutoDao($pdo);
 $EntradaDao = new EntradaDao($pdo);
 $SaidaDao = new SaidaDao($pdo);
-$ProdutoService = new ProdutoServices($ProdutoDao);
-$EntradaService = new EntradaService($EntradaDao,$produtoDao);
-$SaidaService = new SaidaService($SaidaDao,$produtoDao);
+$ProdutoService = new ProdutoService($ProdutoDao);
+$EntradaService = new EntradaService($EntradaDao,$ProdutoDao);
+$SaidaService = new SaidaService($SaidaDao,$ProdutoDao);
 
 
 $app->get('/', function (Request $request, Response $response, $args) use($ProdutoService) {
