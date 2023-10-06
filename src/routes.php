@@ -14,7 +14,7 @@ use src\services\ProdutoService;
 use src\services\SaidaService;
 
 require __DIR__ . '/../vendor/autoload.php';
-// require_once __DIR__.'/../config.php';
+
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
@@ -43,7 +43,24 @@ $app->post('/create', function (Request $request, Response $response, $args) use
     $valor = $dados['valor'];
 
     $novoProduto = new Produto($titulo,$quantidade,$valor);
+
     $ProdutoService->adicionarProduto($novoProduto);
+
+    return $response->withStatus(200);
+});
+
+
+$app->put('/editar/{id}', function (Request $request, Response $response, array $args) use($ProdutoService) {
+    $id = (int) $args['id'];
+    $data = $request->getParsedBody();
+    $titulo = $data['titulo'];
+    $quantidade = (int) $data['quantidade'] ;
+    $valor = floatval($data['valor']);
+
+    $prodtudoAtualizado = new Produto($titulo,$quantidade,$valor);
+
+    $prodtudoAtualizado->id = $id;
+    $ProdutoService->atualizar($prodtudoAtualizado);
 
     return $response->withStatus(200);
 });

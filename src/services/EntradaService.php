@@ -30,7 +30,7 @@ class EntradaService {
         
         $this->entradaDao->adicionarEntrada($entradaProduto);
         $adicionarQuantidade = $entradaProduto->quantidade + $produto->quantidade;
-        $produto->quatidade = $adicionarQuantidade;
+        $produto->quantidade = $adicionarQuantidade;
         $this->produtoDao->editar($produto);
 
     }

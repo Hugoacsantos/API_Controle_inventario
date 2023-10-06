@@ -3,9 +3,10 @@
 namespace src\Dao;
 
 use Exception;
+use src\Dao\interfaces\SaidaInterfaceDao;
 use src\model\SaidaProduto;
 
-class SaidaDao {
+class SaidaDao implements SaidaInterfaceDao {
 
     private $pdo;
 
@@ -14,7 +15,7 @@ class SaidaDao {
         $this->pdo = $pdo;
     }
 
-    public function saidaDeProduto(SaidaProduto $saida){
+    public function saidaDeProduto(SaidaProduto $saida): void{
         $id = md5(time() * rand(1, 9999));
        
         $retirar = $this->pdo->prepare("INSERT INTO saidas (id,id_produto,quantidade) VALUES (:id,:id_produto,:quantidade)");

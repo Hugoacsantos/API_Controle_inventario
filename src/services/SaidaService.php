@@ -30,7 +30,7 @@ class SaidaService {
         
         $this->saidaDao->saidaDeProduto($entradaProduto);
         $removerQuantidade = $entradaProduto->quantidade - $produto->quantidade;
-        $produto->quatidade = $removerQuantidade;
+        $produto->quantidade = $removerQuantidade;
         $this->produtoDao->editar($produto);
 
     }

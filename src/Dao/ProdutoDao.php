@@ -3,9 +3,10 @@
 namespace src\Dao;
 
 use PDO;
+use src\Dao\interfaces\ProdutoInterfaceDao;
 use src\model\Produto;
 
-class ProdutoDao {
+class ProdutoDao implements ProdutoInterfaceDao {
  
     private $pdo;
 
@@ -14,7 +15,7 @@ class ProdutoDao {
         $this->pdo = $pdo;
     }
 
-    public function criar(Produto $produto){
+    public function criar(Produto $produto): bool{
         $id = md5(time() * rand(9,999));
         $sql = $this->pdo->prepare("INSERT INTO produtos (id,titulo,quantidade,valor) VALUES (:id,:titulo,:quantidade,:valor)");
         $sql->bindValue(':id',$id);
@@ -25,7 +26,7 @@ class ProdutoDao {
         return true;
     }
 
-    public function lista(){
+    public function listar(): array {
         $array = [];
         $sql = $this->pdo->query("SELECT * FROM produtos");
         if($sql->rowCount() > 0) {
@@ -44,31 +45,44 @@ class ProdutoDao {
         return $array;
     }
 
-    public function deletar($id){
+    public function deletar(int $id): void{
         $sql = $this->pdo->prepare("DELETE from produtos WHERE id = :id");
         $sql->bindValue(':id',$id);
         $sql->execute();
     }
 
-    public function encontrarPorID($id){
+    public function encontrarPorID($id): Produto|bool{
         $sql = $this->pdo->prepare("SELECT * FROM produtos WHERE id = :id");
         $sql->bindValue(':id',$id);
         $sql->execute();
-        $dados = $sql->fetch(PDO::FETCH_OBJ, Produto::class);
 
-        return $dados;
+        if($sql->rowCount() > 0){
+            $data = $sql->fetch();
+            $produto = new Produto($data['titulo'],$data['quantidade'],$data['valor']);
+            $produto->id = $data['id'];
+            return $produto;
+        }
+        
+        return false;
     }
 
-    public function encontrarPorTitulo($titulo){
+    public function encontrarPorTitulo(string $titulo): Produto|bool{
         $sql = $this->pdo->prepare("SELECT * FROM produtos WHERE titulo = :titulo");
         $sql->bindValue(':titulo',$titulo);
         $sql->execute();
-        $dados = $sql->fetch();
-        return $dados;
+
+        if($sql->rowCount() > 0){
+            $data = $sql->fetch();
+            $produto = new Produto($data['titulo'],$data['quantidade'],$data['valor']);
+            $produto->id = $data['id'];
+            return $produto;
+        }
+        
+        return false;
     }
     
-    public function editar(Produto $produto){
-        $sql = $this->pdo->prepare("UPDATE produtos SET titulo = :titulo , quantidade = :quantidade, valor = valor WHERE id = :id");
+    public function editar(Produto $produto):bool {
+        $sql = $this->pdo->prepare("UPDATE produtos SET titulo = :titulo , quantidade = :quantidade, valor = :valor WHERE id = :id");
         $sql->bindValue(':id', $produto->id);
         $sql->bindValue(':titulo',$produto->titulo);
         $sql->bindValue(':quantidade', $produto->quantidade);
@@ -77,12 +91,6 @@ class ProdutoDao {
 
         return true;
     }
-
-    // public int $id;
-    // public string $titulo;
-    // public string $quantidade;
-    // public string $valor;
-
 
 }
 

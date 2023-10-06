@@ -16,24 +16,25 @@ class ProdutoService {
     }
     
     public function listar(){
-        $lista = $this->produtoDao->lista();
+        $lista = $this->produtoDao->listar();
         return $lista;
     }
 
-    public function adicionarProduto(Produto $produtoDao){
-        $titulo = $produtoDao->titulo;
+    public function adicionarProduto(Produto $produto){
+        $id = md5(time() * rand(9, 999));
+        $titulo = $produto->titulo;
         if($this->produtoDao->encontrarPorTitulo($titulo)){
             return throw new Exception("Produto ja cadastrado");
         }
-        $this->produtoDao->criar($produtoDao);
-        
+        $produto->id = $id;
+        $this->produtoDao->criar($produto);        
         return true;
     }
 
     public function atualizar(Produto $produto){
         $id = $produto->id;
-        $produtoDao = $this->produtoDao->encontrarPorID($id);
-        if(!isset($produtoDao)) {
+        $produtoBanco = $this->produtoDao->encontrarPorID($id);
+        if(!isset($produtoBanco)) {
             throw new Exception("Produto não existe");
         }
         $this->produtoDao->editar($produto);

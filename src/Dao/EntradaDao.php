@@ -3,9 +3,10 @@
 namespace src\Dao;
 
 use Exception;
+use src\Dao\interfaces\EntradaInterfaceDao;
 use src\model\EntradaProduto;
 
-class EntradaDao {
+class EntradaDao implements EntradaInterfaceDao {
 
     private $pdo;
 
@@ -14,7 +15,7 @@ class EntradaDao {
         $this->pdo = $pdo;
     }
 
-    public function adicionarEntrada(EntradaProduto $entrada){
+    public function adicionarEntrada(EntradaProduto $entrada): void {
         $id = md5(time() * rand(1, 9999));
                 
         $sql = $this->pdo->prepare("INSERT INTO entradas (id,id_produto,quantidade) 
