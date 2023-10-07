@@ -16,9 +16,7 @@ class ProdutoDao implements ProdutoInterfaceDao {
     }
 
     public function criar(Produto $produto): bool{
-        $id = md5(time() * rand(9,999));
-        $sql = $this->pdo->prepare("INSERT INTO produtos (id,titulo,quantidade,valor) VALUES (:id,:titulo,:quantidade,:valor)");
-        $sql->bindValue(':id',$id);
+        $sql = $this->pdo->prepare("INSERT INTO produtos (titulo,quantidade,valor) VALUES (:titulo,:quantidade,:valor)");
         $sql->bindValue(':titulo',$produto->titulo);
         $sql->bindValue(':quantidade',$produto->quantidade);
         $sql->bindValue(':valor',$produto->valor);

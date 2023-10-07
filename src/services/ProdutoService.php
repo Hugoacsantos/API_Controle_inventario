@@ -21,12 +21,10 @@ class ProdutoService {
     }
 
     public function adicionarProduto(Produto $produto){
-        $id = md5(time() * rand(9, 999));
         $titulo = $produto->titulo;
         if($this->produtoDao->encontrarPorTitulo($titulo)){
             return throw new Exception("Produto ja cadastrado");
         }
-        $produto->id = $id;
         $this->produtoDao->criar($produto);        
         return true;
     }

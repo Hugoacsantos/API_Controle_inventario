@@ -20,6 +20,8 @@ class EntradaService {
 
     public function criarEntrada(EntradaProduto $entradaProduto){
         $produto = $this->produtoDao->encontrarPorID($entradaProduto->id_produto);
+        var_dump($produto);
+        exit;
         if(!isset($produto)){
             return throw new Exception("Produto nao existe");
         }
@@ -30,6 +32,8 @@ class EntradaService {
         
         $this->entradaDao->adicionarEntrada($entradaProduto);
         $adicionarQuantidade = $entradaProduto->quantidade + $produto->quantidade;
+        var_dump($adicionarQuantidade);
+        exit;
         $produto->quantidade = $adicionarQuantidade;
         $this->produtoDao->editar($produto);
 

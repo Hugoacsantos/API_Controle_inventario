@@ -79,9 +79,8 @@ $app->post('/produto/adicionar/{id}', function(Request $request, Response $respo
     $idProduto = $args['id'];
     $dados = $request->getParsedBody();
     $quantidade = $dados['quantidade'];   
-    $id = rand(1,999);
 
-    $adicionandoProduto = new EntradaProduto($id,$idProduto,$quantidade);
+    $adicionandoProduto = new EntradaProduto($idProduto,$quantidade);
     $EntradaService->criarEntrada($adicionandoProduto);
 
     return $response->withStatus(201);
@@ -91,7 +90,7 @@ $app->post('/produto/retirada/{id}', function(Request $request, Response $respon
     $idProduto = $args['id'];
     $dados = $request->getParsedBody();
     $quantidade = $dados['quantidade'];
-    // $id = rand(4,999);
+
 
     $SaidaProduto = new SaidaProduto($idProduto,$quantidade);
     $SaidaService->retirada($SaidaProduto);
