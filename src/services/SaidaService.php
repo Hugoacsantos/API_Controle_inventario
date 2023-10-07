@@ -18,21 +18,22 @@ class SaidaService {
         $this->produtoDao = $produtoDao;
     }
 
-    public function retirada(SaidaProduto $entradaProduto){
-        $produto = $this->produtoDao->encontrarPorID($entradaProduto->id_produto);
+    public function retirada(SaidaProduto $saidaProduto){
+        $produto = $this->produtoDao->encontrarPorID($saidaProduto->id_produto);
         if(!isset($produto)){
             return throw new Exception("Produto nao existe");
         }
-        
-        if($entradaProduto->quantidade < 0 ){
+
+        if($saidaProduto->quantidade < 0 ){
             return throw new Exception("Quantidade deve ser maior que 0");
         }
-        
-        $this->saidaDao->saidaDeProduto($entradaProduto);
-        $removerQuantidade = $entradaProduto->quantidade - $produto->quantidade;
+      
+        $this->saidaDao->saidaDeProduto($saidaProduto);
+        $removerQuantidade = $produto->quantidade - $saidaProduto->quantidade;
+        var_dump($removerQuantidade);
+        exit;
         $produto->quantidade = $removerQuantidade;
         $this->produtoDao->editar($produto);
-
     }
 
 

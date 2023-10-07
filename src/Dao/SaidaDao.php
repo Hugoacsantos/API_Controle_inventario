@@ -16,7 +16,7 @@ class SaidaDao implements SaidaInterfaceDao {
     }
 
     public function saidaDeProduto(SaidaProduto $saida): void{
-        $id = md5(time() * rand(1, 9999));
+        $id = md5(time() * rand(9, 9999));
        
         $retirar = $this->pdo->prepare("INSERT INTO saidas (id,id_produto,quantidade) VALUES (:id,:id_produto,:quantidade)");
         $id = md5(time() * rand(9,999));

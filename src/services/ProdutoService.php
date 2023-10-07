@@ -47,12 +47,5 @@ class ProdutoService {
         $this->produtoDao->deletar($id);
     }
 
-    public function procurarPorTitulo($titulo){
-        
-    }
-
-    public function procurarPorid($id){
-        
-    }
 
 }
